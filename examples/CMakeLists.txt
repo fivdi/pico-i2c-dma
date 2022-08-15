@@ -1,0 +1,9 @@
+add_subdirectory(access_all_devices_x2_max_speed)
+add_subdirectory(bme280_max_speed)
+add_subdirectory(common)
+add_subdirectory(mcp9808_basic)
+add_subdirectory(mcp9808_max_speed)
+add_subdirectory(mcp9808_max_speed_sdk_blocking)
+add_subdirectory(mcp9808_test_all_i2c_functions)
+add_subdirectory(mcp9808_x2_max_speed)
+

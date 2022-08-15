@@ -1,0 +1,55 @@
+// Performance
+// - release builds in all cases
+// - 1e6 transfers at 1e6 baud
+// SDK blocking version: 62 secs
+// SDK DMA version: 65 secs
+// RTOS DMA versions
+// - Without semaphore synchronisation: 65 secs
+// - Semaphore without "HigherPriorityTaskWoken": 1000 secs (16.7 mins)
+//   - This implies 1 transfer per ms which is 1 transfer per OS tick
+// - Semaphore with "HigherPriorityTaskWoken": 68 secs
+// - Semaphore with "HigherPriorityTaskWoken", waste_time_task: 69 secs
+//   - waste_time_task pefromed 1600 million iterations
+// - Semaphore with "HigherPriorityTaskWoken", waste_time_task: 69 secs
+//   - waste_time_task pefromed 1600 million iterations
+// - Semaphore with "HigherPriorityTaskWoken", mutex, waste_time_task: 76 secs
+//   - waste_time_task pefromed 1600 million iterations
+
+// TODO
+// - Write documentation
+// - A test where the highest priority task doesn't used the I2C busses.
+//   Perhaps this task would show that I2C_TRANSFER_TIMEOUT_MS, currently at
+//   10ms, is too low?
+// - There is i2c_dma_config but no corresponding i2c_dma_deconfig.
+// - Test with the I2C-LCD that can block the bus.
+//
+// Ideas
+// - Don't put data_cmds on stack, put it in i2c_dma_t.
+// - Improve freertos_hooks.c.
+// - Make timeout configurable or a parameter? The value could be stored in
+//   i2c_dma_t and the default value could be I2C_TIMEOUT_MS. Functions could
+//   be provided for getting and setting its value.
+
+https://docs.kernel.org/i2c/smbus-protocol.html
+
+static uint16_t celsius_to_mcp9808_raw_temp(double celsius) {
+  if (celsius < -256) {
+    celsius = -256;
+  } else if (celsius > 255.75) {
+    celsius = 255.75;
+  }
+
+  double raw_celsius = celsius < 0 ? celsius + 256 : celsius;
+  uint16_t raw_temp = lround(raw_celsius * 4) << 2;
+
+  if (raw_temp == 0x1000 && celsius >= -1 && celsius < 0) {
+    // Negative celsius values close to 0 are rounded to 0 meaning they are no
+    // longer negative.
+    raw_temp = 0;
+  } else if (celsius < 0) {
+    raw_temp |= 0x1000;
+  }
+
+  return raw_temp;
+}
+
