@@ -19,12 +19,6 @@ static double mcp9808_raw_temp_to_celsius(uint16_t raw_temp) {
   return celsius;
 }
 
-static void read_word_swapped_old(i2c_inst_t *i2c, int addr, uint8_t reg, int16_t *word) {
-  i2c_write_blocking(i2c, addr, &reg, 1, true);
-  i2c_read_blocking(i2c, addr, (uint8_t *) word, 2, false);
-  *word = *word << 8 | ((*word >> 8) & 0xff);
-}
-
 static int read_word_swapped(i2c_inst_t *i2c, int addr, uint8_t reg, int16_t *word) {
   int rc = i2c_write_blocking(i2c, addr, &reg, 1, true);
   if (rc < 1) {
