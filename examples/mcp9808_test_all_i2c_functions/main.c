@@ -92,6 +92,39 @@ static void dma_write_byte_followed_by_dma_read_byte(i2c_dma_t *i2c_dma) {
 
 static void dma_write_word_followed_by_dma_read_word(i2c_dma_t *i2c_dma) {
   mprintf("dma_write_word_followed_by_dma_read_word\n");
+
+  for (int i = 4; i >= 0; i -= 1) {
+    uint16_t crit_temp = i << 9;
+
+    int rc = i2c_dma_write_word(
+      i2c_dma,
+      MCP9808_ADDR,
+      MCP9808_CRIT_TEMP_REG,
+      crit_temp << 8 | crit_temp >> 8
+    );
+    if (rc != PICO_OK) {
+      mprintf("  i2c_dma_write_word failed, rc: %d\n", rc);
+    } else {
+      uint16_t word;
+      rc = i2c_dma_read_word(
+        i2c_dma, MCP9808_ADDR, MCP9808_CRIT_TEMP_REG, &word
+      );
+      word = word << 8 | word >> 8;
+      if (rc != PICO_OK) {
+        mprintf("  i2c_dma_read_word failed, rc: %d\n", rc);
+      } else if (crit_temp != word) {
+        mprintf(
+          "  expected critical temperature 0x%04x, got 0x%04x\n",
+          crit_temp, word
+        );
+      } else {
+        mprintf(
+          "  ok, critical temperature set to 0x%04x (%.4f)\n",
+          crit_temp, mcp9808_raw_temp_to_celsius(crit_temp)
+        );
+      }
+    }
+  }
 }
 
 static void dma_write_word_swapped_followed_by_dma_read_word_swapped(
