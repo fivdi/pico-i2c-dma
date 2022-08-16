@@ -2,8 +2,10 @@
 
 The goal of this example is use the Pico SDK blocking I2C functions to
 continuously read the 16-bit ambient temperature register on an MCP9808
-temperature sensor in order to determine how often the temperature register
-can be read per second.
+temperature sensor in order to determine how often the temperature register can
+be read per second. This can then be compared with the number of reads per
+second possible with DMA based I2C to ensure that DMA based I2C performance is
+reasonable.
 
 The MCP9808 is assumed to be at address 0x18 on I2C0 (GP4 and GP5).
 

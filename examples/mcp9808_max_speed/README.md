@@ -1,8 +1,9 @@
 # mcp9808_max_speed
 
-The goal of this example is use DMA based I2C functions to continuously read
-the 16-bit ambient temperature register on an MCP9808 temperature sensor in
-order to determine how often the temperature register can be read per second.
+The goal of this example is to use DMA based I2C functions to continuously
+read the 16-bit ambient temperature register on an MCP9808 temperature sensor
+in order to determine how often the temperature register can be read per
+second.
 
 The MCP9808 is assumed to be at address 0x18 on I2C0 (GP4 and GP5).
 
