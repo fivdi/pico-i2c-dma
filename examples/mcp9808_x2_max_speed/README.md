@@ -26,7 +26,7 @@ task, `blink_led_task`, blinks an LED at a frequency of 1Hz. The second task,
 `waste_time_task`, increments a counter in an endless loop.
 
 In the 74 seconds that are required to read the temperature register on each
-MCP9808 temperature sensors 1,000,000 times, `waste_time_task` can increment
+MCP9808 temperature sensor 1,000,000 times, `waste_time_task` can increment
 it's counter 800,000,000 times. Each iteration of the endless loop
 incrementing the counter executes 4 instructions requiring 5 processor cycles:
 
