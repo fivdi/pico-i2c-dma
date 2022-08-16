@@ -36,7 +36,7 @@ Processor cycles per second required by `waste_time_task` to increment its
 counter:
 
 ```
-(1.3e9 * 5 / 72) = 90277777
+1.3e9 * 5 / 72 = 90277777
 ```
 
 If the processor is running at 125MHz and we assume that all remaining
