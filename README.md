@@ -42,5 +42,5 @@ required for the example to function as expected:
 
 - An MCP9808 temperature sensor at address 0x18 on I2C0 (GP4 and GP5)
 - An MCP9808 temperature sensor at address 0x18 on I2C1 (GP6 and GP7)
-- An BME280 sensor at address 0x76 on I2C1 (GP6 and GP7)
+- A BME280 sensor at address 0x76 on I2C1 (GP6 and GP7)
 
