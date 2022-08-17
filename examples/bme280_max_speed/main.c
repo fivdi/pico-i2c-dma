@@ -4,8 +4,8 @@
 #include "i2c_dma.h"
 #include "mprintf.h"
 
-#define BME280_ADDR      0x76
-#define BME280_ID_REG    0xd0
+static const uint8_t BME280_ADDR = 0x76;
+static const uint8_t BME280_ID_REG = 0xd0;
 
 static void blink_led_task(void *args) {
   (void) args;

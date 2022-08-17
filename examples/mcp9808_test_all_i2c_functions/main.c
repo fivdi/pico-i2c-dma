@@ -5,14 +5,14 @@
 #include "i2c_dma.h"
 #include "mprintf.h"
 
-#define MCP9808_ADDR           0x18
-#define MCP9808_CRIT_TEMP_REG  0x04
-#define MCP9808_TEMP_REG       0x05
-#define MCP9808_RESOLUTION_REG 0x08
+static const uint8_t MCP9808_ADDR = 0x18;
+static const uint8_t MCP9808_CRIT_TEMP_REG = 0x04;
+static const uint8_t MCP9808_TEMP_REG = 0x05;
+static const uint8_t MCP9808_RESOLUTION_REG = 0x08;
 
 // After power-up the MCP9808 typically requires 250 ms to perform the first
 // conversion at the power-up default resolution. See datasheet.
-#define MCP9808_POWER_UP_DELAY_MS 300
+static const int32_t MCP9808_POWER_UP_DELAY_MS = 300;
 
 static void blink_led_task(void *args) {
   (void) args;

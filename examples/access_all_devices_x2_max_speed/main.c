@@ -4,15 +4,15 @@
 #include "i2c_dma.h"
 #include "mprintf.h"
 
-#define MCP9808_ADDR     0x18
-#define MCP9808_TEMP_REG 0x05
+static const uint8_t MCP9808_ADDR = 0x18;
+static const uint8_t MCP9808_TEMP_REG = 0x05;
 
 // After power-up the MCP9808 typically requires 250 ms to perform the first
 // conversion at the power-up default resolution. See datasheet.
-#define MCP9808_POWER_UP_DELAY_MS 300
+static const int32_t MCP9808_POWER_UP_DELAY_MS = 300;
 
-#define BME280_ADDR      0x76
-#define BME280_ID_REG    0xd0
+static const uint8_t BME280_ADDR = 0x76;
+static const uint8_t BME280_ID_REG = 0xd0;
 
 static i2c_dma_t *i2c0_dma;
 static i2c_dma_t *i2c1_dma;

@@ -2,12 +2,12 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 
-#define MCP9808_ADDR     0x18
-#define MCP9808_TEMP_REG 0x05
+static const uint8_t MCP9808_ADDR = 0x18;
+static const uint8_t MCP9808_TEMP_REG = 0x05;
 
 // After power-up the MCP9808 typically requires 250 ms to perform the first
 // conversion at the power-up default resolution. See datasheet.
-#define MCP9808_POWER_UP_DELAY_MS 300
+static const int32_t MCP9808_POWER_UP_DELAY_MS = 300;
 
 static double mcp9808_raw_temp_to_celsius(uint16_t raw_temp) {
   double celsius = (raw_temp & 0x0fff) / 16.0;
