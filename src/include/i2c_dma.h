@@ -27,7 +27,7 @@ extern "C" {
 // i2c_dma_init to get a pointer to an i2c_dma_t for I2C0 or I2C1.
 typedef struct i2c_dma_s i2c_dma_t;
 
-// Initializes an I2C peripheral, the SDA GPIO, the SCL gpio, enables the
+// Initializes an I2C peripheral, its SDA pin, its SCL pin, enables the
 // peripheral, and prepares it for DMA usage. i2c_dma_init must be called
 // before other functions. Copies a pointer to an i2c_dma_t to *pi2c_dma. This
 // i2c_dma_t pointer is the pointer passed as the first parameter to all other
