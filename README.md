@@ -6,7 +6,7 @@ A DMA based I2C driver for the RP2040.
 
 - [Installation](#installation)
 - [Examples](#examples)
-
+- [API](#examples)
 
 ## Installation
 
@@ -35,7 +35,7 @@ make
 
 Examples can be found in the [examples](examples/) directory. The examples
 were implemented to verify that the I2C driver functions as expected rather
-than to do anything useful.
+than to do anything useful. Each example has a readme explaining its purpose.
 
 Depending on the example, one or more of the following I2C devices will be
 required for the example to function as expected:
@@ -43,4 +43,8 @@ required for the example to function as expected:
 - An MCP9808 temperature sensor at address 0x18 on I2C0 (GP4 and GP5)
 - An MCP9808 temperature sensor at address 0x18 on I2C1 (GP6 and GP7)
 - A BME280 sensor at address 0x76 on I2C1 (GP6 and GP7)
+
+## API
+
+The API is documented in [i2c_dma.h](https://github.com/fivdi/pico-i2c-dma/blob/master/src/include/i2c_dma.h)
 

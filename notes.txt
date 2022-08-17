@@ -1,22 +1,4 @@
-// Performance
-// - release builds in all cases
-// - 1e6 transfers at 1e6 baud
-// SDK blocking version: 62 secs
-// SDK DMA version: 65 secs
-// RTOS DMA versions
-// - Without semaphore synchronisation: 65 secs
-// - Semaphore without "HigherPriorityTaskWoken": 1000 secs (16.7 mins)
-//   - This implies 1 transfer per ms which is 1 transfer per OS tick
-// - Semaphore with "HigherPriorityTaskWoken": 68 secs
-// - Semaphore with "HigherPriorityTaskWoken", waste_time_task: 69 secs
-//   - waste_time_task pefromed 1600 million iterations
-// - Semaphore with "HigherPriorityTaskWoken", waste_time_task: 69 secs
-//   - waste_time_task pefromed 1600 million iterations
-// - Semaphore with "HigherPriorityTaskWoken", mutex, waste_time_task: 76 secs
-//   - waste_time_task pefromed 1600 million iterations
-
 // TODO
-// - Write documentation
 // - A test where the highest priority task doesn't used the I2C busses.
 //   Perhaps this task would show that I2C_TRANSFER_TIMEOUT_MS, currently at
 //   10ms, is too low?
