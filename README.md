@@ -37,7 +37,7 @@ make
 ## Usage
 
 - Call `i2c_dma_init` to initialize an I2C peripheral, its baudrate, its SDA
-pin, its SCL pin, enable the peripheral, and prepare it for DMA usage
+pin, its SCL pin, to enable the peripheral, and to prepare it for DMA usage
 - Call `i2c_dma_*` functions to communicate with I2C devices on an I2C bus
 
 Here is a minimalistic example that continuously reads the temperature from an
