@@ -27,11 +27,11 @@ extern "C" {
 // i2c_dma_init to get a pointer to an i2c_dma_t for I2C0 or I2C1.
 typedef struct i2c_dma_s i2c_dma_t;
 
-// Initializes an I2C peripheral, its SDA pin, its SCL pin, enables the
-// peripheral, and prepares it for DMA usage. i2c_dma_init must be called
-// before other functions. Copies a pointer to an i2c_dma_t to *pi2c_dma. This
-// i2c_dma_t pointer is the pointer passed as the first parameter to all other
-// i2c_dma_* functions.
+// Initializes an I2C peripheral, its SDA pin, its SCL pin, its baudrate,
+// enables the peripheral, and prepares it for DMA usage. i2c_dma_init must be
+// called before other functions. Copies a pointer to an i2c_dma_t to
+// *pi2c_dma. This i2c_dma_t pointer is the pointer passed as the first
+// parameter to all other i2c_dma_* functions.
 //
 // Returns
 //   PICO_OK
@@ -43,7 +43,7 @@ typedef struct i2c_dma_s i2c_dma_t;
 int i2c_dma_init(
   i2c_dma_t **pi2c_dma, // A pointer to an i2c_dma_t pointer
   i2c_inst_t *i2c,      // Either i2c0 or i2c1
-  uint baudrate,        // Baudrate in Hz
+  uint baudrate,        // Baudrate in hertz
   uint sda_gpio,        // GPIO number for SDA
   uint scl_gpio         // GPIO number for SCL
 );
@@ -229,7 +229,7 @@ static inline int i2c_dma_write_word(
   return i2c_dma_write_read(i2c_dma, addr, wbuf, 3, NULL, 0);
 }
 
-// Reads a 16-bit word from a register. The least significant byte is sent
+// Reads a 16-bit word from a register. The least significant byte is received
 // over the wire first.
 //
 // I2C Transaction:
@@ -288,7 +288,7 @@ static inline int i2c_dma_write_word_swapped(
   return i2c_dma_write_read(i2c_dma, addr, wbuf, 3, NULL, 0);
 }
 
-// Reads a 16-bit word from a register. The most significant byte is sent
+// Reads a 16-bit word from a register. The most significant byte is received
 // over the wire first.
 //
 // I2C Transaction:
