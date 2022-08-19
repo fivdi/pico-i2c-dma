@@ -9,6 +9,8 @@ static const uint8_t MCP9808_TEMP_REG = 0x05;
 static const int32_t MCP9808_POWER_UP_DELAY_MS = 300;
 
 static void mcp9808_task(void *args) {
+  (void) args;
+
   i2c_dma_t *i2c_dma;
   i2c_dma_init(&i2c_dma, i2c0, (1000 * 1000), 4, 5);
 
@@ -28,7 +30,7 @@ static void mcp9808_task(void *args) {
   }
 }
 
-int main() {
+int main(void) {
   stdio_init_all();
 
   xTaskCreate(

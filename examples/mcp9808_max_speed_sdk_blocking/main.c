@@ -39,7 +39,7 @@ static int read_word_swapped(i2c_inst_t *i2c, int addr, uint8_t reg, int16_t *wo
   return PICO_OK;
 }
 
-int main() {
+int main(void) {
   stdio_init_all();
 
   i2c_init(i2c0, 1000 * 1000);

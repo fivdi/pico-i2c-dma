@@ -57,11 +57,11 @@ static void i2c_dma_irq_handler(i2c_dma_t *i2c_dma) {
   }
 }
 
-static void i2c0_dma_irq_handler() {
+static void i2c0_dma_irq_handler(void) {
   i2c_dma_irq_handler(&i2c_dma_list[0]);
 }
 
-static void i2c1_dma_irq_handler() {
+static void i2c1_dma_irq_handler(void) {
   i2c_dma_irq_handler(&i2c_dma_list[1]);
 }
 
@@ -241,10 +241,8 @@ static int i2c_dma_write_read_internal(
   size_t rbuf_len
 ) {
   if (
-    (wbuf_len < 0) ||
-    (wbuf_len > 0 && wbuf == 0) ||
-    (rbuf_len < 0) ||
-    (rbuf_len > 0 && rbuf == 0) ||
+    (wbuf_len > 0 && wbuf == NULL) ||
+    (rbuf_len > 0 && rbuf == NULL) ||
     (wbuf_len == 0 && rbuf_len == 0) ||
     (wbuf_len + rbuf_len > I2C_MAX_TRANSFER_SIZE)
   ) {
@@ -256,12 +254,12 @@ static int i2c_dma_write_read_internal(
   const bool writing = (wbuf_len > 0);
   const bool reading = (rbuf_len > 0);
 
-  int tx_chan; // Channel for writing data_cmds to I2C peripheral.
-  int rx_chan; // Channel for reading data from I2C peripheral, if needed.
+  int tx_chan = 0; // Channel for writing data_cmds to I2C peripheral.
+  int rx_chan = 0; // Channel for reading data from I2C peripheral, if needed.
 
   if (writing) {
     // Setup commands for each byte to write to the I2C bus.
-    for (int i = 0; i != wbuf_len; ++i) {
+    for (size_t i = 0; i != wbuf_len; ++i) {
       data_cmds[i] = wbuf[i];
     }
 
@@ -277,7 +275,7 @@ static int i2c_dma_write_read_internal(
 
   if (reading) {
     // Setup commands for each byte to read from the I2C bus.
-    for (int i = 0; i != rbuf_len; ++i) {
+    for (size_t i = 0; i != rbuf_len; ++i) {
       data_cmds[wbuf_len + i] = I2C_IC_DATA_CMD_CMD_BITS;
     }
 

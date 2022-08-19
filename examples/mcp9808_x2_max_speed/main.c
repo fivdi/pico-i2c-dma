@@ -92,7 +92,7 @@ static void waste_time_task(void *args) {
   }
 }
 
-int main() {
+int main(void) {
   stdio_init_all();
 
   static i2c_dma_t *i2c0_dma;

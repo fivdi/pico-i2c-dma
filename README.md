@@ -74,7 +74,7 @@ static void mcp9808_task(void *args) {
   }
 }
 
-int main() {
+int main(void) {
   stdio_init_all();
 
   xTaskCreate(
