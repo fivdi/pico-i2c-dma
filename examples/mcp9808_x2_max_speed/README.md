@@ -58,9 +58,10 @@ cycles per second required for DMA based I2C is:
 The program spends 43.24% of its time incrementing the counter and 56.76% of
 its time reading from the two temperature sensors.
 
-As a reminder, `mcp9808_max_speed` performed 1,000,000 reads in 72 seconds and
-spent 72.22% of its time incrementing the counter and 27.78% of its time
-reading from the temperature sensor.
+This can be compared with example [mcp9808_max_speed](../mcp9808_max_speed)
+which performed 1,000,000 reads in 72 seconds and spent 72.22% of its time
+incrementing the counter and 27.78% of its time reading from the temperature
+sensor.
 
 Typical program output:
 

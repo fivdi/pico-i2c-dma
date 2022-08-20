@@ -103,5 +103,5 @@ required for the example to function as expected:
 
 ## API
 
-The API is documented in [i2c_dma.h](https://github.com/fivdi/pico-i2c-dma/blob/master/src/include/i2c_dma.h)
+The API is documented in [i2c_dma.h](src/include/i2c_dma.h)
 
