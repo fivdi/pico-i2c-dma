@@ -61,8 +61,8 @@ its time reading from the two temperature sensors.
 
 This can be compared with example [mcp9808_max_speed](../mcp9808_max_speed)
 which performs 1,000,000 reads in 72 seconds and spends 72.22% of its time
-incrementing the counter and 27.78% of its time reading from the temperature
-sensor.
+incrementing the counter and 27.78% of its time reading from a single
+temperature sensor.
 
 Typical program output:
 
