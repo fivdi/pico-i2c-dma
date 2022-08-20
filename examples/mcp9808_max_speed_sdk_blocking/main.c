@@ -10,13 +10,7 @@ static const uint8_t MCP9808_TEMP_REG = 0x05;
 static const int32_t MCP9808_POWER_UP_DELAY_MS = 300;
 
 static double mcp9808_raw_temp_to_celsius(uint16_t raw_temp) {
-  double celsius = (raw_temp & 0x0fff) / 16.0;
-
-  if (raw_temp & 0x1000) {
-    celsius -= 256;
-  }
-
-  return celsius;
+  return (raw_temp & 0x0fff) / 16.0 - (raw_temp & 0x1000 ? 256 : 0);
 }
 
 static int read_word_swapped(i2c_inst_t *i2c, int addr, uint8_t reg, int16_t *word) {

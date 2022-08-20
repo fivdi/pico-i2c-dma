@@ -25,13 +25,7 @@ static void blink_led_task(void *args) {
 }
 
 static double mcp9808_raw_temp_to_celsius(uint16_t raw_temp) {
-  double celsius = (raw_temp & 0x0fff) / 16.0;
-
-  if (raw_temp & 0x1000) {
-    celsius -= 256;
-  }
-
-  return celsius;
+  return (raw_temp & 0x0fff) / 16.0 - (raw_temp & 0x1000 ? 256 : 0);
 }
 
 static void mcp9808_bus0_task(void *args) {
