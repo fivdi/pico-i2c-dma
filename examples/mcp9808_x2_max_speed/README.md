@@ -6,7 +6,8 @@ sensors concurrently in order to determine how often the temperature registers
 can be read per second.
 
 This example is similar to example `mcp9808_max_speed` but it reads the
-temperature from two MCP9808 temperature sensors concurrently.
+temperature from two MCP9808 temperature sensors concurrently rather than
+from just one sensor.
 
 The example assumes the following setup:
 
@@ -59,7 +60,7 @@ The program spends 43.24% of its time incrementing the counter and 56.76% of
 its time reading from the two temperature sensors.
 
 This can be compared with example [mcp9808_max_speed](../mcp9808_max_speed)
-which performed 1,000,000 reads in 72 seconds and spent 72.22% of its time
+which performs 1,000,000 reads in 72 seconds and spends 72.22% of its time
 incrementing the counter and 27.78% of its time reading from the temperature
 sensor.
 
