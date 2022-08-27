@@ -6,7 +6,6 @@
 // - Test with the I2C-LCD that can block the bus.
 //
 // Ideas
-// - Don't put data_cmds on stack, put it in i2c_dma_t.
 // - Improve freertos_hooks.c.
 // - Make timeout configurable or a parameter? The value could be stored in
 //   i2c_dma_t and the default value could be I2C_TIMEOUT_MS. Functions could

@@ -6,8 +6,8 @@
 #include "hardware/irq.h"
 #include "i2c_dma.h"
 
-#define I2C_MAX_TRANSFER_SIZE     32
-#define I2C_TRANSFER_TIMEOUT_MS   10
+#define I2C_MAX_TRANSFER_SIZE     1056
+#define I2C_TRANSFER_TIMEOUT_MS   100
 #define I2C_TAKE_MUTEX_TIMEOUT_MS 10000
 
 typedef struct i2c_dma_s {
@@ -25,6 +25,8 @@ typedef struct i2c_dma_s {
 
   volatile bool stop_detected;
   volatile bool abort_detected;
+
+  uint16_t data_cmds[I2C_MAX_TRANSFER_SIZE];
 } i2c_dma_t;
 
 static i2c_dma_t i2c_dma_list[2];
@@ -249,8 +251,6 @@ static int i2c_dma_write_read_internal(
     return PICO_ERROR_INVALID_ARG;
   }
 
-  uint16_t data_cmds[I2C_MAX_TRANSFER_SIZE];
-
   const bool writing = (wbuf_len > 0);
   const bool reading = (rbuf_len > 0);
 
@@ -260,11 +260,11 @@ static int i2c_dma_write_read_internal(
   if (writing) {
     // Setup commands for each byte to write to the I2C bus.
     for (size_t i = 0; i != wbuf_len; ++i) {
-      data_cmds[i] = wbuf[i];
+      i2c_dma->data_cmds[i] = wbuf[i];
     }
 
     // The first byte written must be preceded by a start.
-    data_cmds[0] |= I2C_IC_DATA_CMD_RESTART_BITS;
+    i2c_dma->data_cmds[0] |= I2C_IC_DATA_CMD_RESTART_BITS;
   }
 
   // DMA tx_chan is needed for both writing and reading.
@@ -276,11 +276,11 @@ static int i2c_dma_write_read_internal(
   if (reading) {
     // Setup commands for each byte to read from the I2C bus.
     for (size_t i = 0; i != rbuf_len; ++i) {
-      data_cmds[wbuf_len + i] = I2C_IC_DATA_CMD_CMD_BITS;
+      i2c_dma->data_cmds[wbuf_len + i] = I2C_IC_DATA_CMD_CMD_BITS;
     }
 
     // The first byte read must be preceded by a start/restart.
-    data_cmds[wbuf_len] |= I2C_IC_DATA_CMD_RESTART_BITS;
+    i2c_dma->data_cmds[wbuf_len] |= I2C_IC_DATA_CMD_RESTART_BITS;
 
     // DMA rx_chan is only needed for reading.
     rx_chan = dma_claim_unused_channel(false);
@@ -291,7 +291,7 @@ static int i2c_dma_write_read_internal(
   }
 
   // The last byte transfered must be followed by a stop.
-  data_cmds[wbuf_len + rbuf_len - 1] |= I2C_IC_DATA_CMD_STOP_BITS;
+  i2c_dma->data_cmds[wbuf_len + rbuf_len - 1] |= I2C_IC_DATA_CMD_STOP_BITS;
 
   // Tell the I2C peripheral the adderss of the device for the transfer.
   i2c_dma_set_target_addr(i2c_dma->i2c, addr);
@@ -304,7 +304,7 @@ static int i2c_dma_write_read_internal(
     i2c_dma_rx_channel_configure(i2c_dma->i2c, rx_chan, rbuf, rbuf_len);
   }
   i2c_dma_tx_channel_configure(
-    i2c_dma->i2c, tx_chan, data_cmds, wbuf_len + rbuf_len
+    i2c_dma->i2c, tx_chan, i2c_dma->data_cmds, wbuf_len + rbuf_len
   );
 
   // The I2C transfer via DMA has been started. Wait for it to complete. Under
