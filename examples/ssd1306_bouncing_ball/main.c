@@ -176,7 +176,7 @@ static void ssd1306_bouncing_ball_task(void *args) {
   const UG_FONT *font = &FONT_5X12;
   UG_FontSelect(font);
 
-  for (int err_cnt = 0, i = 0; true; i += 1) {
+  for (int i = 0; true; i += 1) {
     // Clear the display.
     UG_FillScreen(C_BLACK);
 
