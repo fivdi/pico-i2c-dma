@@ -7,7 +7,9 @@
 #include "i2c_dma.h"
 
 #define I2C_MAX_TRANSFER_SIZE     1056
-#define I2C_TRANSFER_TIMEOUT_MS   100
+// A transfer timeout of 1000ms will allow a 10000 bit transfer to complete
+// successfully at baudrates as low as 10000 baud without timeouts.
+#define I2C_TRANSFER_TIMEOUT_MS   1000
 #define I2C_TAKE_MUTEX_TIMEOUT_MS 10000
 
 typedef struct i2c_dma_s {
